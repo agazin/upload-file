@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: 'test-service'
+    nameth: 'ทดสอบ'
+
+  profiles:
+    active: dev
+
+   

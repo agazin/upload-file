@@ -1,0 +1,59 @@
+server.max-http-header-size: 10000000
+debug: false
+application:
+  name: '@project.artifactId@'
+build:
+  version: '@project.version@'
+  timestamp: '@timestamp@'
+  
+security:
+  oauth2:
+    resource:
+      id: efiling
+      jwt:
+         key-uris: https://efiling-inter.pccth.com/rd-user-oauth-service/oauth/token_key
+         
+# Actuator Prometheus Endpoint
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, health, prometheus
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+#[STATIC PARAMETER ONLY]
+#[If you want to set the parameters dynamically, please set them under the profile.]
+ 
+spring:
+  application:
+    name: '@project.name@'
+  messages:
+    basename: i18n/message
+  data:
+    jpa:
+      repositories:
+        enabled: true
+        
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+#  jackson:
+#    serialization:
+#      fail-on-empty-beans: false
+  
+logging:
+  pattern:
+    console:  '[] %d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN} [%X{CLIENT_IP}] [%X{USER_NAME}] [%X{OAUTH_CLIENT_ID}] [%M\(%F:%L\)] : %msg%n'
+  level:
+    root: INFO
+    org.hibernate.type: OFF
+    org.springframework.web: ERROR
+    th.go.rd: INFO
+#  file: /opt/app/logs/${spring.application.name}.log
